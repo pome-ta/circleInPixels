@@ -14,17 +14,17 @@ class View(ui.View):
 
   def draw(self):
     _, _, w, h = self.frame
-    r = 5
+    r = 9
     n = int(r * 2)
     l = min(w, h)
     cell_size = l / n
-    
+
     for x in range(n):
       for y in range(n):
-        ui.set_color('red')
+        ui.set_color(0.25)
         rect = ui.Path.rect(cell_size * x, cell_size * y, cell_size, cell_size)
         rect.fill()
-        ui.set_color('green')
+        ui.set_color(0.75)
         rect.stroke()
 
   def layout(self):
