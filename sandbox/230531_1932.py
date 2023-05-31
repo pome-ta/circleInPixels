@@ -13,24 +13,21 @@ class View(ui.View):
     pass
 
   def draw(self):
-    pass
+    _, _, w, h = self.frame
+    r = 5
+    n = int(r * 2)
+    l = min(w, h)
+    cell_size = l / n
+    
+    for x in range(n):
+      for y in range(n):
+        ui.set_color('red')
+        rect = ui.Path.rect(cell_size * x, cell_size * y, cell_size, cell_size)
+        rect.fill()
+        ui.set_color('green')
+        rect.stroke()
 
   def layout(self):
-    pass
-
-  def touch_began(self, touch):
-    pass
-
-  def touch_moved(self, touch):
-    pass
-
-  def touch_ended(self, touch):
-    pass
-
-  def keyboard_frame_will_change(self, frame):
-    pass
-
-  def keyboard_frame_did_change(self, frame):
     pass
 
 
