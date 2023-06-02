@@ -14,7 +14,7 @@ class View(ui.View):
 
   def draw(self):
     _, _, w, h = self.frame
-    r = 9
+    r = 4
     n = int(r * 2)
     l = min(w, h)
     cell_size = l / n
