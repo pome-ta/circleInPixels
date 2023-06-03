@@ -1,9 +1,10 @@
 import ui
 
+
 def set_color(radius, x, y, cell):
   ui.set_color('red') if x == radius or y == radius else ui.set_color(0.25)
   cell.fill()
-  
+
   ui.set_color(0.75)
   cell.stroke()
 
