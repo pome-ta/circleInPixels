@@ -14,13 +14,24 @@ class View(ui.View):
 
   def draw(self):
     _, _, w, h = self.frame
-    #red = ui.set_color('red')
-    #grey = ui.set_color(0.25)
     r = 6
     n = int(r * 2 + 1)
     l = min(w, h)
     cell_size = l / n
 
+    self.cells = [[
+      ui.Path.rect(cell_size * x, cell_size * y, cell_size, cell_size)
+      for x in range(n)
+    ] for y in range(n)]
+
+    for x in range(n):
+      for y in range(n):
+        rect = self.cells[x][y]
+        ui.set_color(0.75)
+        rect.stroke()
+
+    #for x_cell in self.
+    '''
     for x in range(n):
       for y in range(n):
         ui.set_color('red') if x == r or y == r else ui.set_color(0.25)
@@ -29,6 +40,7 @@ class View(ui.View):
         rect.fill()
         ui.set_color(0.75)
         rect.stroke()
+    '''
 
   def layout(self):
     pass
