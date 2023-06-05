@@ -29,21 +29,6 @@ class View(ui.View):
     for x in range(n):
       for y in range(n):
         set_color(r, x, y, self.cells[x][y])
-        #rect = self.cells[x][y]
-        #ui.set_color(0.75)
-        #rect.stroke()
-
-    #for x_cell in self.
-    '''
-    for x in range(n):
-      for y in range(n):
-        ui.set_color('red') if x == r or y == r else ui.set_color(0.25)
-
-        rect = ui.Path.rect(cell_size * x, cell_size * y, cell_size, cell_size)
-        rect.fill()
-        ui.set_color(0.75)
-        rect.stroke()
-    '''
 
   def layout(self):
     pass
