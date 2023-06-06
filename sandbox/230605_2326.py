@@ -10,7 +10,7 @@ class View(ui.View):
   def draw(self):
     _, _, w, h = self.frame
     ui.set_color(0.25)
-    back = ui.Path.rect(w/4, h/4, w/2, h/2)
+    back = ui.Path.rect(w / 4, h / 4, w / 2, h / 2)
     back.fill()
 
   def layout(self):
