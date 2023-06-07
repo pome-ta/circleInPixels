@@ -27,8 +27,8 @@ class View(ui.View):
 
     for i in range(0, 360, 5):
       rad = math.radians(i)
-      x_r = cnt_x + (r * math.sin(rad))
-      y_r = cnt_y + (r * math.cos(rad))
+      x_r = cnt_x + int(r * math.sin(rad))
+      y_r = cnt_y + int(r * math.cos(rad))
       print(y_r)
       oval = ui.Path.oval(x_r, y_r, ov, ov)
       oval.fill()
