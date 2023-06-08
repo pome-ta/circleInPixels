@@ -1,6 +1,14 @@
-# 円を作る
+# 円を作る カクカクさせる
 import math
 import ui
+
+
+def setup_cells(radius, x, y, cell):
+  ui.set_color('red') if x == radius or y == radius else ui.set_color(0.25)
+  cell.fill()
+
+  ui.set_color(0.75)
+  cell.stroke()
 
 
 class View(ui.View):
@@ -10,6 +18,12 @@ class View(ui.View):
 
   def draw(self):
     _, _, w, h = self.frame
+    #_, _, w, h = self.frame
+    r = 32
+    n = int(r * 2 + 1)
+    l = min(w, h)
+    cell_size = l / n
+    
     back_size = min(w, h) / 1.25
     x_pos = (w / 2) - (back_size / 2)
     y_pos = (h / 2) - (back_size / 2)
