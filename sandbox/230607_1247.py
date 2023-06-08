@@ -29,7 +29,7 @@ class View(ui.View):
       rad = math.radians(i)
       x_r = cnt_x + int(r * math.sin(rad))
       y_r = cnt_y + int(r * math.cos(rad))
-      print(y_r)
+      #print(y_r)
       oval = ui.Path.oval(x_r, y_r, ov, ov)
       oval.fill()
 
