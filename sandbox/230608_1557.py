@@ -16,14 +16,24 @@ class View(ui.View):
   def __init__(self):
     self.bg_color = 1
 
-  def draw(self):
-    _, _, w, h = self.frame
-    #_, _, w, h = self.frame
-    r = 32
+  def create_grid_cells(self, r: int, w: float, h: float) -> list:
     n = int(r * 2 + 1)
     l = min(w, h)
     cell_size = l / n
+
+    cells = [[
+      ui.Path.rect(cell_size * x, cell_size * y, cell_size, cell_size)
+      for x in range(n)
+    ] for y in range(n)]
     
+    [[setup_cells(r, x, y, cells[x][y]) for x in range(n)] for y in range(n)]
+    
+    return cells
+
+  def draw(self):
+    _, _, w, h = self.frame
+    self.cells = self.create_grid_cells(32, w, h)
+
     back_size = min(w, h) / 1.25
     x_pos = (w / 2) - (back_size / 2)
     y_pos = (h / 2) - (back_size / 2)
