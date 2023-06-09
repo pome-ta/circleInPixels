@@ -3,6 +3,11 @@ import math
 import ui
 
 
+c1 = 0.25
+c2 = 'red'
+c3 = 'yellow'
+c4 = 'blue'
+
 def setup_cells(radius, x, y, cell):
   ui.set_color('red') if x == radius or y == radius else ui.set_color(0.25)
   cell.fill()
@@ -34,7 +39,7 @@ class View(ui.View):
     _, _, w, h = self.frame
     
     
-    box_len = 16
+    box_len = 5
 
     self.cells, self.cell_size, self.grid_size = self.create_grid_cells(
       box_len, w, h)
@@ -49,10 +54,23 @@ class View(ui.View):
     #pos_y = r - (ov / 2) - (self.cell_size / 2)
 
     ui.set_color('yellow')
-    for i in range(0, 360):
+    for i in range(0, 360, 5):
       rad = math.radians(i)
+      
       r_x = pos_x + (r * math.sin(rad))+ (self.cell_size / 2)
+      i_x = int(r_x / self.cell_size)
+      
       r_y = pos_y + (r * math.cos(rad))+ (self.cell_size / 2)
+      i_y = int(r_y/self.cell_size)
+      
+      #ui.set_color(c4)
+      cell = self.cells[i_x][i_y]
+      cell.fill()
+      
+      
+      
+      
+      
       oval = ui.Path.oval(r_x, r_y, ov, ov)
       oval.fill()
     '''
