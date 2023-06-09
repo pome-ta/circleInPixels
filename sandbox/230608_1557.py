@@ -26,7 +26,7 @@ class View(ui.View):
       for x in range(n)
     ] for y in range(n)]
     
-    [[setup_cells(r, x, y, cells[x][y]) for x in range(n)] for y in range(n)]
+    [[setup_cells(r, x, y, cells[x][y]) for y in range(n)] for x in range(n)]
     
     return cells
 
