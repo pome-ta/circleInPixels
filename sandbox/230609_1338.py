@@ -32,25 +32,27 @@ class View(ui.View):
 
   def draw(self):
     _, _, w, h = self.frame
-    box_len = 9
+    
+    
+    box_len = 16
 
     self.cells, self.cell_size, self.grid_size = self.create_grid_cells(
       box_len, w, h)
 
     self.indexs = len(self.cells)
 
-    ov = 5
-    r = self.grid_size / 2
+    ov = 2
+    r = (self.grid_size / 2)- (self.cell_size / 2)
     pos_x = r - (ov / 2)
     pos_y = r - (ov / 2)
     #pos_x = r - (ov / 2) - (self.cell_size / 2)
     #pos_y = r - (ov / 2) - (self.cell_size / 2)
 
-    ui.set_color('blue')
-    for i in range(0, 360, 5):
+    ui.set_color('yellow')
+    for i in range(0, 360):
       rad = math.radians(i)
-      r_x = pos_x + (r * math.sin(rad))
-      r_y = pos_y + (r * math.cos(rad))
+      r_x = pos_x + (r * math.sin(rad))+ (self.cell_size / 2)
+      r_y = pos_y + (r * math.cos(rad))+ (self.cell_size / 2)
       oval = ui.Path.oval(r_x, r_y, ov, ov)
       oval.fill()
     '''
