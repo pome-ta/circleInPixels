@@ -49,12 +49,28 @@ class View(ui.View):
     r = (self.grid_size / 2) - (self.cell_size / 2)
     pos_x = r - (ov / 2)
     pos_y = r - (ov / 2)
-    #pos_x = r - (ov / 2) - (self.cell_size / 2)
-    #pos_y = r - (ov / 2) - (self.cell_size / 2)
-    
-    self.pi_r = [[pos_x + (r * math.sin(math.radians(i))) + (self.cell_size / 2), pos_y + (r * math.cos(math.radians(i))) + (self.cell_size / 2)] for i in range(0,360,180)]
 
-    ui.set_color('yellow')
+    self.pi_r = [[
+      pos_x + (r * math.sin(math.radians(i))) + (self.cell_size / 2),
+      pos_y + (r * math.cos(math.radians(i))) + (self.cell_size / 2)
+    ] for i in range(0, 360, 36)]
+
+    self.cell_pi = set(
+      map(tuple, [[int(x / self.cell_size),
+                   int(y / self.cell_size)] for x, y in self.pi_r]))
+
+    ui.set_color(c4)
+    for idx in self.cell_pi:
+      i_x, i_y = idx
+      cell = self.cells[i_x][i_y]
+      cell.fill()
+
+    ui.set_color(c3)
+    for idx in self.pi_r:
+      r_x, r_y = idx
+      oval = ui.Path.oval(r_x, r_y, ov, ov)
+      oval.fill()
+    '''
     for i in range(0, 360, 120):
       rad = math.radians(i)
 
@@ -70,6 +86,7 @@ class View(ui.View):
 
       oval = ui.Path.oval(r_x, r_y, ov, ov)
       oval.fill()
+    '''
 
   def layout(self):
     pass
