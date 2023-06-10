@@ -59,7 +59,6 @@ class View(ui.View):
       map(tuple, [[int(x / self.cell_size),
                    int(y / self.cell_size)] for x, y in self.pi_r]))
 
-    
     for idx in self.cell_pi:
       i_x, i_y = idx
       cell = self.cells[i_x][i_y]
@@ -73,23 +72,6 @@ class View(ui.View):
       r_x, r_y = idx
       oval = ui.Path.oval(r_x, r_y, ov, ov)
       oval.fill()
-    '''
-    for i in range(0, 360, 120):
-      rad = math.radians(i)
-
-      r_x = pos_x + (r * math.sin(rad)) + (self.cell_size / 2)
-      i_x = int(r_x / self.cell_size)
-
-      r_y = pos_y + (r * math.cos(rad)) + (self.cell_size / 2)
-      i_y = int(r_y / self.cell_size)
-
-      #ui.set_color(c4)
-      cell = self.cells[i_x][i_y]
-      cell.fill()
-
-      oval = ui.Path.oval(r_x, r_y, ov, ov)
-      oval.fill()
-    '''
 
   def layout(self):
     pass
