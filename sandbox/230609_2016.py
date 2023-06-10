@@ -2,11 +2,11 @@
 import math
 import ui
 
-
 c1 = 0.25
 c2 = 'red'
 c3 = 'yellow'
 c4 = 'blue'
+
 
 def setup_cells(radius, x, y, cell):
   ui.set_color('red') if x == radius or y == radius else ui.set_color(0.25)
@@ -28,8 +28,8 @@ class View(ui.View):
 
     cells = [[
       ui.Path.rect(cell_size * x, cell_size * y, cell_size, cell_size)
-      for x in range(n)
-    ] for y in range(n)]
+      for y in range(n)
+    ] for x in range(n)]
 
     [[setup_cells(r, x, y, cells[x][y]) for y in range(n)] for x in range(n)]
 
@@ -37,8 +37,7 @@ class View(ui.View):
 
   def draw(self):
     _, _, w, h = self.frame
-    
-    
+
     box_len = 5
 
     self.cells, self.cell_size, self.grid_size = self.create_grid_cells(
@@ -47,56 +46,28 @@ class View(ui.View):
     self.indexs = len(self.cells)
 
     ov = 2
-    r = (self.grid_size / 2)- (self.cell_size / 2)
+    r = (self.grid_size / 2) - (self.cell_size / 2)
     pos_x = r - (ov / 2)
     pos_y = r - (ov / 2)
     #pos_x = r - (ov / 2) - (self.cell_size / 2)
     #pos_y = r - (ov / 2) - (self.cell_size / 2)
 
     ui.set_color('yellow')
-    for i in range(0, 360, 180):
+    for i in range(0, 360, 120):
       rad = math.radians(i)
-      
-      r_x = pos_x + (r * math.cos(rad))+ (self.cell_size / 2)
+
+      r_x = pos_x + (r * math.sin(rad)) + (self.cell_size / 2)
       i_x = int(r_x / self.cell_size)
-      
-      r_y = pos_y + (r * math.sin(rad))+ (self.cell_size / 2)
-      i_y = int(r_y/self.cell_size)
-      
+
+      r_y = pos_y + (r * math.cos(rad)) + (self.cell_size / 2)
+      i_y = int(r_y / self.cell_size)
+
       #ui.set_color(c4)
       cell = self.cells[i_x][i_y]
-      #cell.fill()
-      
-      
-      
-      
-      
+      cell.fill()
+
       oval = ui.Path.oval(r_x, r_y, ov, ov)
       oval.fill()
-    '''
-    back_size = min(w, h) / 1.25
-    x_pos = (w / 2) - (back_size / 2)
-    y_pos = (h / 2) - (back_size / 2)
-    ui.set_color(0.25)
-    back = ui.Path.rect(x_pos, y_pos, back_size, back_size)
-    back.fill()
-
-    ui.set_color('red')
-
-    r = back_size / 2
-
-    ov = 5
-    cnt_x = x_pos + (back_size / 2) - (ov / 2)
-    cnt_y = y_pos + (back_size / 2) - (ov / 2)
-
-    for i in range(0, 360, 5):
-      rad = math.radians(i)
-      x_r = cnt_x + int(r * math.sin(rad))
-      y_r = cnt_y + int(r * math.cos(rad))
-      #print(y_r)
-      oval = ui.Path.oval(x_r, y_r, ov, ov)
-      oval.fill()
-    '''
 
   def layout(self):
     pass
