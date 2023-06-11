@@ -15,9 +15,9 @@ class View(ui.View):
     self.indexs: list
 
     # --- color 定義
-    self.g_stroke = 0.75
-    self.g_fill = 0.25
-    self.c1 = 'red'
+    self.g_stroke: str | float | int = 0.75
+    self.g_fill: str | float | int = 0.25
+    self.c1: str | float | int = 'red'
 
     # --- 変数反映
     self.cell_rad = r
@@ -57,7 +57,7 @@ class View(ui.View):
     # todo: view 確定後に、画面位置サイズ情報を取得
     _, _, w, h = self.frame
     self.setup_grid_cells(w, h)
-    #self.init_grid_colors()
+    self.init_grid_colors()
 
   def layout(self):
     pass
