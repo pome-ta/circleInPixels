@@ -24,7 +24,8 @@ class View(ui.View):
 
   def init_grid_colors(self):
     # --- 中心線塗り
-    is_center = lambda _x, _y: True if _x == self.cell_rad or _y == self.cell_rad else False
+    _r = self.cell_rad
+    is_center = lambda _x, _y: True if _x == _r or _y == _r else False
 
     for x, rows in enumerate(self.cells):
       for y, cell in enumerate(rows):
