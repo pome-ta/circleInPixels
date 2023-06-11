@@ -12,6 +12,7 @@ class View(ui.View):
     self.cell_size: float
     self.grid_size: float
     self.cells: list
+    self.indexs:list
 
     # --- color 定義
     self.g_stroke = 0.75
@@ -42,9 +43,12 @@ class View(ui.View):
     rd = range(cd)
     # xxx: `rect` 生成と位置サイズ指定を関数化（お行儀良くないけど、長くなるので）
     create_rect = lambda _x, _y: ui.Path.rect(cs * _x, cs * _y, cs, cs)
-
-    self.cells = [[create_rect(x, y) for y in rd] for x in rd]
-
+    
+    # xxx: `ui.Path` オブジェクトと、そのインデックス情報の二つを渡したい
+    # xxx: インデックス情報を今後回した方が、処理早いかも？と思ってるけど、そんなこともないかな？
+    #self.cells = [[create_rect(x, y) for y in rd] for x in rd]
+    self.cells = [[create_rect(x,y) for y in rd] for x in rd]
+    
     self.grid_size = gs
     self.cell_dia = cd
     self.cell_size = cs
@@ -53,7 +57,9 @@ class View(ui.View):
     # todo: view 確定後に、画面位置サイズ情報を取得
     _, _, w, h = self.frame
     self.setup_grid_cells(w, h)
-    self.init_grid_colors()
+    #self.init_grid_colors()
+    
+    
 
   def layout(self):
     pass
