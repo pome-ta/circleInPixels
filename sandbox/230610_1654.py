@@ -38,7 +38,7 @@ class View(ui.View):
   def draw(self):
     _, _, w, h = self.frame
 
-    box_len = 18
+    box_len = 8
 
     self.cells, self.cell_size, self.grid_size = self.create_grid_cells(
       box_len, w, h)
@@ -53,7 +53,7 @@ class View(ui.View):
     self.pi_r = [[
       pos_x + (r * math.sin(math.radians(i))) + (self.cell_size / 2),
       pos_y + (r * math.cos(math.radians(i))) + (self.cell_size / 2)
-    ] for i in range(0, 360)]
+    ] for i in range(0, 360,)]
 
     self.cell_pi = set(
       map(tuple, [[int(x / self.cell_size),
