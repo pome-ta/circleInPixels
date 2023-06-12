@@ -62,8 +62,11 @@ class View(ui.View):
 
     for round in range(int(self.cell_rad * 4)):
       a = math.sqrt(pow(self.cell_rad, 2) + pow(round, 2))
-      x = int((self.cell_rad * math.sin(round/a)))
-      y = int((self.cell_rad * math.cos(round/a)))
+
+      s = round / a
+      c = self.cell_rad / a
+      x = int(self.cell_rad * s) + self.cell_rad
+      y = int(self.cell_rad * c) + self.cell_rad
 
       cell = self.cells[x][y]
       ui.set_color(self.c2)
