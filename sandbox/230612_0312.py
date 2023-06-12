@@ -17,7 +17,8 @@ class View(ui.View):
     # --- color 定義
     self.g_stroke: str | float | int = 0.75
     self.g_fill: str | float | int = 0.25
-    self.c1: str | float | int = 'red'
+    self.c1: str | float = 'red'
+    self.c2: str | float = 'blue'
 
     # --- 変数反映
     self.cell_rad = r
@@ -58,6 +59,15 @@ class View(ui.View):
     _, _, w, h = self.frame
     self.setup_grid_cells(w, h)
     self.init_grid_colors()
+
+    for round in range(int(self.cell_rad * 4)):
+      a = math.sqrt(pow(self.cell_rad, 2) + pow(round, 2))
+      x = int((self.cell_rad * math.sin(a)) + self.cell_rad)
+      y = int((self.cell_rad * math.cos(a)) + self.cell_rad)
+
+      cell = self.cells[x][y]
+      ui.set_color(self.c2)
+      cell.fill()
 
   def layout(self):
     pass
