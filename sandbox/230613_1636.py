@@ -63,7 +63,6 @@ class View(ui.View):
     for r in range(self.cell_dia):
       a = math.sqrt(pow(r,2) + pow(self.cell_rad,2))
       x = math.sin(a)
-      
       print(x)
       
       
