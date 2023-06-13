@@ -1,4 +1,4 @@
-# 中心から、セルごとに線を引く
+# 円を作る カクカクさせる: sine wave
 import math
 import ui
 
@@ -47,8 +47,8 @@ class View(ui.View):
 
     # xxx: `ui.Path` オブジェクトと、そのインデックス情報の二つを渡したい
     # xxx: インデックス情報を今後回した方が、処理早いかも？と思ってるけど、そんなこともないかな？
-    self.cells = [[create_rect(x, y) for y in rd] for x in rd]
     #self.cells = [[create_rect(x, y) for y in rd] for x in rd]
+    self.cells = [[create_rect(x, y) for y in rd] for x in rd]
 
     self.grid_size = gs
     self.cell_dia = cd
@@ -61,9 +61,11 @@ class View(ui.View):
     self.init_grid_colors()
 
     for r in range(self.cell_dia):
-      a = math.sqrt(pow(r, 2) + pow(self.cell_rad, 2))
+      a = math.sqrt(pow(r,2) + pow(self.cell_rad,2))
       x = math.sin(a)
       print(x)
+      
+      
 
   def layout(self):
     pass
