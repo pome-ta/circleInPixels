@@ -1,4 +1,4 @@
-# 長さより、円を作る
+# 中心から、セルごとに線を引く
 import math
 import ui
 
@@ -64,19 +64,8 @@ class View(ui.View):
     self.setup_grid_cells(w, h)
     self.init_grid_colors()
 
-    for i in range(self.cell_dia):
-      rad = (i / self.cell_dia) * (math.pi *2)
-      x = int(math.sin(rad) * self.cell_rad + self.cell_rad)
-      y = int(math.cos(rad) * self.cell_rad + self.cell_rad)
-      
-      
-      print(x, y)
-      
-      cell = self.cells[x][y]
-      ui.set_color(self.c2)
-      cell.fill()
-      ui.set_color(self.g_stroke)
-      cell.stroke()
+    for i in range(self.cell_rad):
+      print(i)
 
   def layout(self):
     pass
