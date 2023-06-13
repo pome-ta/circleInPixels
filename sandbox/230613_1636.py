@@ -61,15 +61,10 @@ class View(ui.View):
     self.init_grid_colors()
 
     for r in range(self.cell_dia):
-      x = int(math.sin(r * math.pi) * self.cell_rad)+self.cell_rad
-      y = r
-      print(x)
+      a = math.sqrt(pow(r,2) + pow(self.cell_rad,2))
+      x = math.sin(a)
       
-      cell = self.cells[x][y]
-      ui.set_color(self.c2)
-      cell.fill()
-      ui.set_color(self.g_stroke)
-      cell.stroke()
+      print(x)
       
       
 
