@@ -19,6 +19,7 @@ class View(ui.View):
     self.g_fill: str | float | int = 0.25
     self.c1: str | float = 'red'
     self.c2: str | float = 'blue'
+    self.c3: str | float = 'green'
 
     # --- 変数反映
     self.cell_rad = r
@@ -43,7 +44,8 @@ class View(ui.View):
 
     rd = range(cd)
 
-    self.indexs = [[x, y] for y in range(cd) for x in range(cd)]
+    #self.indexs = [[x, y] for y in range(cd) for x in range(cd)]
+    self.indexs = [[[x, y] for y in range(cd)] for x in range(cd)]
     # xxx: `rect` 生成と位置サイズ指定を関数化（お行儀良くないけど、長くなるので）
     create_rect = lambda _x, _y: ui.Path.rect(cs * _x, cs * _y, cs, cs)
 
@@ -70,18 +72,16 @@ class View(ui.View):
     _, _, w, h = self.frame
     self.setup_grid_cells(w, h)
     self.init_grid_colors()
+    
+    # normalize
 
-    for i in range(self.cell_rad):
-      #print(i)
-      i
-    line = ui.Path()
-    line.line_width = 1
-    line.move_to(w / 2, self.cell_size * self.cell_rad)
-    line.line_to(w, self.cell_size * self.cell_rad)
+    cell = self.cells[self.cell_rad][self.cell_rad]
     ui.set_color(self.c2)
-    line.stroke()
-    #print(self.cell_size * self.cell_dia)
-    print(self._c2g(1))
+    cell.fill()
+
+    cell = self.cells[self.cell_rad + 2][self.cell_rad - 3]
+    ui.set_color(self.c3)
+    cell.fill()
 
   def layout(self):
     pass
