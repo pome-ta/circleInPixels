@@ -65,7 +65,15 @@ class View(ui.View):
     self.init_grid_colors()
 
     for i in range(self.cell_rad):
-      print(i)
+      #print(i)
+      i
+    line = ui.Path()
+    line.line_width = 1
+    line.move_to(w/2, self.cell_size * self.cell_rad)
+    line.line_to(w, self.cell_size * self.cell_rad)
+    ui.set_color(self.c2)
+    line.stroke()
+    print(self.cell_size * self.cell_dia)
 
   def layout(self):
     pass
