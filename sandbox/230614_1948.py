@@ -51,22 +51,38 @@ class View(ui.View):
     self.cell_dia = cd
     self.cell_size = cs
 
-  def normalize_cell(self, ox: int, oy: int) -> ui.Path:
-    nx = ox - self.cell_rad - 1
-    ny = oy - self.cell_rad - 1
+  def _normalize_to_position(self, nx: int, ny: int) -> list[int, int]:
+    px = self.cell_rad + nx
+    py = self.cell_rad + ny
+    return [px, py]
+
+  def _position_to_normalize(self, px: int, py: int) -> list[int, int]:
+    nx = px - self.cell_rad - 1
+    ny = py - self.cell_rad - 1
+    return [nx, ny]
+
+  def normalize_cell(self, px: int, py: int) -> ui.Path:
+    nx, ny = self._position_to_normalize(px, py)
     return self.cells[nx][ny]
+
+  def get_cell_position(self, cell: ui.Path):
+    print(cell)
 
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
     _, _, w, h = self.frame
     self.setup_grid_cells(w, h)
     self.init_grid_colors()
+    
+    px,py = self._normalize_to_position(0, 0)
 
-    cell = self.normalize_cell(0, 0)
+    cell = self.normalize_cell(px, py)
+    #cell = self.normalize_cell(-8,0)
     ui.set_color(self.c2)
     cell.fill()
+    #self.get_cell_position(cell)
 
-    cell = self.cells[self.cell_rad + 2][self.cell_rad - 3]
+    cell = self.cells[0][0]
     ui.set_color(self.c3)
     cell.fill()
 
