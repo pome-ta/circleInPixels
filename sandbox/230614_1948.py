@@ -60,22 +60,20 @@ class View(ui.View):
     self.cell_dia = cd
     self.cell_size = cs
 
-  def _c2g(self, index: int) -> float:
-    size_len = index * self.cell_size
-    return size_len - (self.cell_size / 2) if size_len else size_len
-
-  def cell_to_line(self, s: list[int], e: list[int], length: float):
-    line = ui.Path()
+  def normalize_cell(self, ox: int, oy: int) -> ui.Path:
+    nx = ox - self.cell_rad - 1
+    ny = oy - self.cell_rad - 1
+    return self.cells[nx][ny]
 
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
     _, _, w, h = self.frame
     self.setup_grid_cells(w, h)
     self.init_grid_colors()
-    
+
     # normalize
 
-    cell = self.cells[self.cell_rad][self.cell_rad]
+    cell = self.normalize_cell(8, 0)
     ui.set_color(self.c2)
     cell.fill()
 
