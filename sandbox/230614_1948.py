@@ -7,8 +7,8 @@ class View(ui.View):
 
   def __init__(self, r: int = 2):
     # --- 初期定義
-    self.cell_rad: int
-    self.cell_dia: int
+    self.cell_rad: int  # cell の半径
+    self.cell_dia: int  # cell の全径
     self.cell_size: float
     self.grid_size: float
     self.cells: list
@@ -43,18 +43,9 @@ class View(ui.View):
     cs = gs / cd
 
     rd = range(cd)
-
-    #self.indexs = [[x, y] for y in range(cd) for x in range(cd)]
-    self.indexs = [[[x, y] for y in range(cd)] for x in range(cd)]
-    # xxx: `rect` 生成と位置サイズ指定を関数化（お行儀良くないけど、長くなるので）
     create_rect = lambda _x, _y: ui.Path.rect(cs * _x, cs * _y, cs, cs)
 
-    # xxx: `ui.Path` オブジェクトと、そのインデックス情報の二つを渡したい
-    # xxx: インデックス情報を今後回した方が、処理早いかも？と思ってるけど、そんなこともないかな？
     self.cells = [[create_rect(x, y) for y in rd] for x in rd]
-    #self.cells = [create_rect(x, y) for x, y in self.indexs]
-
-    #self.cells = [[create_rect(x, y) for y in rd] for x in rd]
 
     self.grid_size = gs
     self.cell_dia = cd
@@ -71,9 +62,7 @@ class View(ui.View):
     self.setup_grid_cells(w, h)
     self.init_grid_colors()
 
-    # normalize
-
-    cell = self.normalize_cell(8, 0)
+    cell = self.normalize_cell(0, 0)
     ui.set_color(self.c2)
     cell.fill()
 
