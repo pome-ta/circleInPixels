@@ -51,12 +51,10 @@ class View(ui.View):
     self.cell_dia = cd
     self.cell_size = cs
 
-
-  # xxx: 普通にindex `-1` 指定か？
   def _normalize_to_position(self, nx: int, ny: int) -> list[int, int]:
-    px = self.cell_rad + nx
-    py = self.cell_rad + ny
-    print(px)
+    px = self.cell_rad + nx# if nx else 0
+    py = self.cell_rad + ny# if ny else 0
+    
     return [px, py]
 
   def _position_to_normalize(self, px: int, py: int) -> list[int, int]:
@@ -76,8 +74,8 @@ class View(ui.View):
     _, _, w, h = self.frame
     self.setup_grid_cells(w, h)
     self.init_grid_colors()
-    
-    px,py = self._normalize_to_position(0, 0)
+
+    px, py = self._normalize_to_position(0, 0)
 
     cell = self.cells[px][py]
     #cell = self.normalize_cell(-8,0)
