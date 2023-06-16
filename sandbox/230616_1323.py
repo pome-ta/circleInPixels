@@ -69,10 +69,11 @@ class View(ui.View):
                            cx: int,
                            cy: int,
                            is_normalized: bool = True) -> list[float, float]:
-    x, y = self._normalize_to_position(
-      cx, xy) if is_normalized else self._position_to_normalize(cx, cy)
-    gpx = x * self.cell_size + self.cell_size
-    gpy = y * self.cell_size + self.cell_size
+    x, y = self._normalize_to_position(cx, cy) if is_normalized else [cx, cy]
+    print(x)
+    offset = self.cell_size / 2
+    gpx = x * self.cell_size + offset
+    gpy = y * self.cell_size + offset
     return [gpx, gpy]
 
   def draw(self):
@@ -83,15 +84,24 @@ class View(ui.View):
 
     px, py = self._normalize_to_position(0, 0)
 
-    cell = self.cells[px][py]
+    cell = self.cells[1][2]
     #cell = self.normalize_cell(-8,0)
     ui.set_color(self.c2)
     cell.fill()
     #self.get_cell_position(cell)
 
-    cell = self.cells[0][0]
+    cell = self.cells[8][8]
     ui.set_color(self.c3)
     cell.fill()
+    sx, sy = self.get_grid_to_position(1, 2, False)
+    ex, ey = self.get_grid_to_position(8, 8, False)
+    line = ui.Path()
+    line.line_width = 1
+    line.move_to(sx, sy)
+    line.line_to(ex, ey)
+    ui.set_color(self.c1)
+    line.stroke()
+    #print(self.get_grid_to_position(1, 2, False))
 
   def layout(self):
     pass
