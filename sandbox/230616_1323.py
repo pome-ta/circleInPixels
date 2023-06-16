@@ -20,6 +20,8 @@ class View(ui.View):
     self.c1: str | float = 'red'
     self.c2: str | float = 'blue'
     self.c3: str | float = 'green'
+    self.c4: str | float = 'yellow'
+    
 
     # --- 変数反映
     self.cell_rad = r
@@ -70,7 +72,7 @@ class View(ui.View):
                            cy: int,
                            is_normalized: bool = True) -> list[float, float]:
     x, y = self._normalize_to_position(cx, cy) if is_normalized else [cx, cy]
-    print(x)
+    
     offset = self.cell_size / 2
     gpx = x * self.cell_size + offset
     gpy = y * self.cell_size + offset
@@ -99,7 +101,7 @@ class View(ui.View):
     line.line_width = 1
     line.move_to(sx, sy)
     line.line_to(ex, ey)
-    ui.set_color(self.c1)
+    ui.set_color(self.c4)
     line.stroke()
     #print(self.get_grid_to_position(1, 2, False))
 
