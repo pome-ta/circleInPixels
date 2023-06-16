@@ -54,7 +54,6 @@ class View(ui.View):
   def _normalize_to_position(self, nx: int, ny: int) -> list[int, int]:
     px = self.cell_rad + nx
     py = self.cell_rad + ny
-
     return [px, py]
 
   def _position_to_normalize(self, px: int, py: int) -> list[int, int]:
@@ -66,13 +65,15 @@ class View(ui.View):
     nx, ny = self._position_to_normalize(px, py)
     return self.cells[nx][ny]
 
-  def get_cell_position(self,
-                        cx: int,
-                        cy: int,
-                        normalize: bool = True) -> list[float, float]:
+  def get_grid_to_position(self,
+                           cx: int,
+                           cy: int,
+                           is_normalized: bool = True) -> list[float, float]:
     x, y = self._normalize_to_position(
-      cx, xy) if normalize else self._position_to_normalize(cx, cy)
-    
+      cx, xy) if is_normalized else self._position_to_normalize(cx, cy)
+    gpx = x * self.cell_size + self.cell_size
+    gpy = y * self.cell_size + self.cell_size
+    return [gpx, gpy]
 
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
