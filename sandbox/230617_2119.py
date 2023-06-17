@@ -96,30 +96,8 @@ class View(ui.View):
     _, _, w, h = self.frame
     self.setup_grid_cells(w, h)
     self.init_grid_colors()
+    
 
-    px, py = self._normalize_to_position(0, 0)
-
-    cell = self.cells[1][2]
-    #cell = self.normalize_cell(-8,0)
-    ui.set_color(self.c2)
-    cell.fill()
-    #self.get_cell_position(cell)
-
-    cell = self.cells[8][8]
-    ui.set_color(self.c3)
-    cell.fill()
-    sx, sy = self.get_index_to_position(2, 4, False)
-    ex, ey = self.get_index_to_position(8, 8, False)
-    sx += self.cell_size * 1.50
-
-    line = ui.Path()
-    line.line_width = 1
-    line.move_to(sx, sy)
-    line.line_to(ex, ey)
-    ui.set_color(self.c4)
-    line.stroke()
-    #print(self.get_grid_to_position(1, 2, False))
-    print(self.get_position_to_index(sx,sy))
 
   def layout(self):
     pass
