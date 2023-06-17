@@ -1,6 +1,12 @@
 # 中心から、セルごとに線を引く
 import math
+from decimal import Decimal, ROUND_HALF_UP, ROUND_HALF_EVEN
+
 import ui
+
+
+def round_halfup(f: float) -> int:
+  return Decimal(str(f)).quantize(Decimal('0'), rounding=ROUND_HALF_UP)
 
 
 class View(ui.View):
@@ -21,7 +27,6 @@ class View(ui.View):
     self.c2: str | float = 'blue'
     self.c3: str | float = 'green'
     self.c4: str | float = 'yellow'
-    
 
     # --- 変数反映
     self.cell_rad = r
@@ -63,20 +68,28 @@ class View(ui.View):
     ny = py - self.cell_rad - 1
     return [nx, ny]
 
-  def normalize_cell(self, px: int, py: int) -> ui.Path:
-    nx, ny = self._position_to_normalize(px, py)
+  def normalize_cell(self, cx: int, cy: int) -> ui.Path:
+    nx, ny = self._position_to_normalize(cx, cy)
     return self.cells[nx][ny]
 
-  def get_grid_to_position(self,
-                           cx: int,
-                           cy: int,
+  def get_index_to_position(self,
+                           ix: int,
+                           iy: int,
                            is_normalized: bool = True) -> list[float, float]:
-    x, y = self._normalize_to_position(cx, cy) if is_normalized else [cx, cy]
-    
+    x, y = self._normalize_to_position(ix, iy) if is_normalized else [ix, iy]
+
     offset = self.cell_size / 2
     gpx = x * self.cell_size + offset
     gpy = y * self.cell_size + offset
     return [gpx, gpy]
+
+  def get_position_to_index(self, px: float, py: float) -> list[int, int]:
+    offset = self.cell_size / 2
+    _x = (px - offset) / self.cell_size
+    _y = (py - offset) / self.cell_size
+    ix = round_halfup(_x)
+    iy = round_halfup(_y)
+    return [int(ix), int(iy)]
 
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
@@ -95,8 +108,10 @@ class View(ui.View):
     cell = self.cells[8][8]
     ui.set_color(self.c3)
     cell.fill()
-    sx, sy = self.get_grid_to_position(1, 2, False)
-    ex, ey = self.get_grid_to_position(8, 8, False)
+    sx, sy = self.get_index_to_position(2, 4, False)
+    ex, ey = self.get_index_to_position(8, 8, False)
+    sx += self.cell_size * 1.50
+
     line = ui.Path()
     line.line_width = 1
     line.move_to(sx, sy)
@@ -104,6 +119,7 @@ class View(ui.View):
     ui.set_color(self.c4)
     line.stroke()
     #print(self.get_grid_to_position(1, 2, False))
+    print(self.get_position_to_index(sx,sy))
 
   def layout(self):
     pass
@@ -112,7 +128,5 @@ class View(ui.View):
 if __name__ == '__main__':
   cell_radius: int = 8
   view = View(cell_radius)
-  #view.present()
-  #view.present(hide_title_bar=True)
   view.present(style='fullscreen', orientations=['portrait'])
 
