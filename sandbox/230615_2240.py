@@ -52,9 +52,9 @@ class View(ui.View):
     self.cell_size = cs
 
   def _normalize_to_position(self, nx: int, ny: int) -> list[int, int]:
-    px = self.cell_rad + nx# if nx else 0
-    py = self.cell_rad + ny# if ny else 0
-    
+    px = self.cell_rad + nx  # if nx else 0
+    py = self.cell_rad + ny  # if ny else 0
+
     return [px, py]
 
   def _position_to_normalize(self, px: int, py: int) -> list[int, int]:
