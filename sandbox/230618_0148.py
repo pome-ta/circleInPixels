@@ -24,6 +24,7 @@ class View(ui.View):
     # --- color 定義
     self.g_stroke: str | float | int = 0.75
     self.g_fill: str | float | int = 0.25
+    self.c0: str | float = 0.88
     self.c1: str | float = 'maroon'
     self.c2: str | float = 'blue'
     self.c3: str | float = 'green'
@@ -74,9 +75,9 @@ class View(ui.View):
     return self.cells[nx][ny]
 
   def get_index_to_position(self,
-                           ix: int,
-                           iy: int,
-                           is_normalized: bool = True) -> list[float, float]:
+                            ix: int,
+                            iy: int,
+                            is_normalized: bool = True) -> list[float, float]:
     x, y = self._normalize_to_position(ix, iy) if is_normalized else [ix, iy]
 
     offset = self.cell_size / 2
@@ -92,12 +93,21 @@ class View(ui.View):
     iy = round_halfup(_y)
     return [int(ix), int(iy)]
 
+  def get_bounds_to_index(self, cell: ui.Path) -> list[int, int]:
+    cx, cy, _, _ = cell.bounds
+    ix = round_halfup(cx / self.cell_size)
+    iy = round_halfup(cy / self.cell_size)
+    return [int(ix), int(iy)]
+
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
     _, _, w, h = self.frame
     self.setup_grid_cells(w, h)
     self.init_grid_colors()
-    
+
+    s_cell = self.normalize_cell(0, 0)
+    ui.set_color(self.c0)
+    s_cell.fill()
     for i in range(self.cell_dia):
       cell = self.cells[i][0]
       h = i / self.cell_dia
@@ -105,9 +115,7 @@ class View(ui.View):
       cell.fill()
       ui.set_color(self.g_stroke)
       cell.stroke()
-      
-    
-
+      print(self.get_bounds_to_index(cell))
 
   def layout(self):
     pass
