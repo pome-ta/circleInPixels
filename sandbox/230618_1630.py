@@ -106,11 +106,22 @@ class View(ui.View):
     iy = round_halfup(cy / self.cell_size)
     return [int(ix), int(iy)]
 
-  def create_cells_to_line(self,
-                           s_cell: ui.Path,
-                           e_cell: ui.Path,
-                           line_width: int = 1):
-    pass
+  def create_line_cells_index(self,
+                              s_cell: ui.Path,
+                              e_cell: ui.Path,
+                              stroke: str | float,
+                              line_width: int = 1):
+    s_bix, s_biy = self.get_bounds_to_index(s_cell)
+    e_bix, e_biy = self.get_bounds_to_index(e_cell)
+    sx, sy = self.get_index_to_position(s_bix, s_biy, False)
+    ex, ey = self.get_index_to_position(e_bix, e_biy, False)
+
+    line = ui.Path()
+    line.line_width = line_width
+    line.move_to(sx, sy)
+    line.line_to(ex, ey)
+    ui.set_color(stroke)
+    line.stroke()
 
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
@@ -127,6 +138,7 @@ class View(ui.View):
 
       h = i / self.cell_dia
       hsv_color = colorsys.hsv_to_rgb(h, 1.0, 1.0)
+      self.create_line_cells_index(s_cell, cell, hsv_color)
 
   def layout(self):
     pass
