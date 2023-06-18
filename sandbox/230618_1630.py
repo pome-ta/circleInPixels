@@ -34,10 +34,10 @@ class View(ui.View):
     self.cell_rad = r
     self.bg_color = 1
 
-  def set_color_fill_stroke(self,
-                      cell: ui.Path,
-                      fill: str | float,
-                      stroke: str | float | None = None):
+  def set_cell_color(self,
+                     cell: ui.Path,
+                     fill: str | float,
+                     stroke: str | float | None = None):
     stroke = fill if stroke == None else stroke
     ui.set_color(fill)
     cell.fill()
@@ -48,15 +48,10 @@ class View(ui.View):
     # --- 中心線塗り
     _r = self.cell_rad
     is_center = lambda _x, _y: True if _x == _r or _y == _r else False
-
-    for x, rows in enumerate(self.cells):
-      for y, cell in enumerate(rows):
-        self.set_color_fill_stroke(cell, self.c1 if is_center(x, y) else self.g_fill,
-                             self.g_stroke)
-        #ui.set_color(self.c1) if is_center(x, y) else ui.set_color(self.g_fill)
-        #cell.fill()
-        #ui.set_color(self.g_stroke)
-        #cell.stroke()
+    [[
+      self.set_cell_color(cell, self.c1 if is_center(x, y) else self.g_fill,
+                          self.g_stroke) for y, cell in enumerate(rows)
+    ] for x, rows in enumerate(self.cells)]
 
   def setup_grid_cells(self, width: float, height: float):
     gs = min(width, height)
@@ -118,8 +113,8 @@ class View(ui.View):
     self.init_grid_colors()
 
     s_cell = self.normalize_cell(0, 0)
-    ui.set_color(self.c0)
-    s_cell.fill()
+    self.set_cell_color(s_cell, self.c0, self.g_stroke)
+
     for i in range(self.cell_dia):
       cell = self.cells[i][0]
 
