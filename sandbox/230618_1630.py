@@ -34,7 +34,7 @@ class View(ui.View):
     self.cell_rad = r
     self.bg_color = 1
 
-  def set_fill_stroke(self,
+  def set_color_fill_stroke(self,
                       cell: ui.Path,
                       fill: str | float,
                       stroke: str | float | None = None):
@@ -51,7 +51,7 @@ class View(ui.View):
 
     for x, rows in enumerate(self.cells):
       for y, cell in enumerate(rows):
-        self.set_fill_stroke(cell, self.c1 if is_center(x, y) else self.g_fill,
+        self.set_color_fill_stroke(cell, self.c1 if is_center(x, y) else self.g_fill,
                              self.g_stroke)
         #ui.set_color(self.c1) if is_center(x, y) else ui.set_color(self.g_fill)
         #cell.fill()
