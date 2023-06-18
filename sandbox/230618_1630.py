@@ -106,6 +106,12 @@ class View(ui.View):
     iy = round_halfup(cy / self.cell_size)
     return [int(ix), int(iy)]
 
+  def create_cells_to_line(self,
+                           s_cell: ui.Path,
+                           e_cell: ui.Path,
+                           line_width: int = 1):
+    pass
+
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
     _, _, w, h = self.frame
@@ -117,11 +123,7 @@ class View(ui.View):
 
     for i in range(self.cell_dia):
       cell = self.cells[i][0]
-
-      ui.set_color(self.c0)
-      cell.fill()
-      ui.set_color(self.g_stroke)
-      cell.stroke()
+      self.set_cell_color(cell, self.c0, self.g_stroke)
 
       h = i / self.cell_dia
       hsv_color = colorsys.hsv_to_rgb(h, 1.0, 1.0)
