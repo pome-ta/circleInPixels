@@ -1,4 +1,4 @@
-# 中心から、セルごとに線を引く
+# 中心から、セルごとに線を引く レイトレ？
 import math
 import colorsys
 from decimal import Decimal, ROUND_HALF_UP, ROUND_HALF_EVEN
@@ -145,7 +145,7 @@ class View(ui.View):
 
 
 if __name__ == '__main__':
-  cell_radius: int = 8
+  cell_radius: int = 3
   view = View(cell_radius)
   view.present(style='fullscreen', orientations=['portrait'])
 
