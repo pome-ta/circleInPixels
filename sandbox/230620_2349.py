@@ -68,16 +68,21 @@ class View(ui.View):
     self.cell_size = cs
 
   def _offset_index(self, idx: int, is_normalized: bool = True) -> int:
-    pass
+    offset = self.cell_rad if is_normalized else self.cell_dia
+    return idx if idx >= offset else idx % offset
 
   def _normalize_to_position(self, nx: int, ny: int) -> list[int, int]:
-    px = self.cell_rad + nx
-    py = self.cell_rad + ny
+    #px = self.cell_rad + nx
+    #py = self.cell_rad + ny
+    px = self._offset_index(self.cell_rad + nx, False)
+    py = self._offset_index(self.cell_rad + ny, False)
     return [px, py]
 
   def _position_to_normalize(self, px: int, py: int) -> list[int, int]:
-    nx = px - self.cell_rad - 1
-    ny = py - self.cell_rad - 1
+    #nx = px - self.cell_rad - 1
+    #ny = py - self.cell_rad - 1
+    nx = self._offset_index(px - self.cell_rad - 1, True)
+    ny = self._offset_index(py - self.cell_rad - 1, True)
     return [nx, ny]
 
   def normalize_cell(self, cx: int, cy: int) -> ui.Path:
@@ -141,16 +146,17 @@ class View(ui.View):
     oy = -(self.cell_rad)
     #oy = 0
     for i in range(oval):
-      print(i)
-      '''
+      #print(i)
+      
       nx, ny = self._position_to_normalize(i, -self.cell_rad)
+      print(nx)
       cell = self.cells[nx][ny]
       self.set_cell_color(cell, self.c0, self.g_stroke)
 
       h = i / self.cell_dia
       hsv_color = colorsys.hsv_to_rgb(h, 1.0, 1.0)
       self.create_line_cells_index(s_cell, cell, hsv_color)
-      '''
+      
 
   def layout(self):
     pass
