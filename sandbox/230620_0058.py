@@ -1,4 +1,4 @@
-# 中心から、セルごとに線を引く
+# 中心から、セルごとに線を引く 行列の回転？
 import math
 import colorsys
 from decimal import Decimal, ROUND_HALF_UP, ROUND_HALF_EVEN
@@ -132,21 +132,14 @@ class View(ui.View):
     s_cell = self.normalize_cell(0, 0)
     self.set_cell_color(s_cell, self.c0, self.g_stroke)
 
-    '''
-    for i in range(self.cell_dia):
-      cell = self.cells[i][0]
+    for i in range(2):
+      nx, ny = self._position_to_normalize(i, -self.cell_rad)
+      cell = self.cells[nx][ny]
       self.set_cell_color(cell, self.c0, self.g_stroke)
 
       h = i / self.cell_dia
       hsv_color = colorsys.hsv_to_rgb(h, 1.0, 1.0)
       self.create_line_cells_index(s_cell, cell, hsv_color)
-    '''
-    cell = self.cells[int(self.cell_rad)][0]
-    self.set_cell_color(cell, self.c0, self.g_stroke)
-    self.create_line_cells_index(s_cell, cell, self.c2)
-    
-
-    
 
   def layout(self):
     pass
@@ -156,4 +149,5 @@ if __name__ == '__main__':
   cell_radius: int = 3
   view = View(cell_radius)
   view.present(style='fullscreen', orientations=['portrait'])
+  #view.present(style='panel', orientations=['portrait'])
 
