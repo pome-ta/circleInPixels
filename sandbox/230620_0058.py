@@ -132,7 +132,13 @@ class View(ui.View):
     s_cell = self.normalize_cell(0, 0)
     self.set_cell_color(s_cell, self.c0, self.g_stroke)
 
-    for i in range(2):
+    oval = int((self.cell_dia - 1) * 4)
+    #ox, oy = [0, 0]
+    ox = 0
+    oy = -(self.cell_rad)
+    for i in range(oval):
+      print(i)
+      '''
       nx, ny = self._position_to_normalize(i, -self.cell_rad)
       cell = self.cells[nx][ny]
       self.set_cell_color(cell, self.c0, self.g_stroke)
@@ -140,13 +146,14 @@ class View(ui.View):
       h = i / self.cell_dia
       hsv_color = colorsys.hsv_to_rgb(h, 1.0, 1.0)
       self.create_line_cells_index(s_cell, cell, hsv_color)
+      '''
 
   def layout(self):
     pass
 
 
 if __name__ == '__main__':
-  cell_radius: int = 3
+  cell_radius: int = 4
   view = View(cell_radius)
   view.present(style='fullscreen', orientations=['portrait'])
   #view.present(style='panel', orientations=['portrait'])
