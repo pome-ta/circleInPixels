@@ -135,7 +135,8 @@ class View(ui.View):
     oval = int((self.cell_dia - 1) * 4)
     #ox, oy = [0, 0]
     ox = 0
-    oy = -(self.cell_rad)
+    #oy = -(self.cell_rad)
+    oy = 0
     for i in range(oval):
       print(i)
       '''
@@ -153,7 +154,7 @@ class View(ui.View):
 
 
 if __name__ == '__main__':
-  cell_radius: int = 4
+  cell_radius: int = 2
   view = View(cell_radius)
   view.present(style='fullscreen', orientations=['portrait'])
   #view.present(style='panel', orientations=['portrait'])
