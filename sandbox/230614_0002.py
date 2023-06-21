@@ -80,7 +80,7 @@ class View(ui.View):
 
 
 if __name__ == '__main__':
-  cell_radius: int = 8
+  cell_radius: int = 4
   view = View(cell_radius)
   #view.present()
   #view.present(hide_title_bar=True)

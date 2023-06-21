@@ -3,14 +3,13 @@ def ovflw(_o: int) -> int:
   return o
 
 
-def nor2pos(_p: int) -> int:
-  p = _p % d
-  return p
+def pos2nor(_p: int) -> int:
+  p = ovflw(_p)
+  return ri[p]
 
 
-def pos2nor(_n: int) -> int:
-  n = _n % d
-  return ri[n]
+def nor2pos(_n: int) -> int:
+  pass
 
 
 d = 5
@@ -23,5 +22,5 @@ r = 2
 di = list(range(d))
 ri = list(range(-r, r + 1))
 
-aa = list(map(ovflw, ri))
+aa = list(map(pos2nor, range(7)))
 
