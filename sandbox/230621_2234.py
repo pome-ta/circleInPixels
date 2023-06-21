@@ -122,8 +122,8 @@ class View(ui.View):
     line.line_to(ex, ey)
     ui.set_color(stroke)
     line.stroke()
-    
-  def get_length(self):
+
+  def get_oblique_line(self):
     pass
 
   def draw(self):

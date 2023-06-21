@@ -122,9 +122,6 @@ class View(ui.View):
     line.line_to(ex, ey)
     ui.set_color(stroke)
     line.stroke()
-    
-  def get_length(self):
-    pass
 
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
