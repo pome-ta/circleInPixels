@@ -137,11 +137,9 @@ class View(ui.View):
 
     #for i in range(-self.cell_rad, self.cell_rad + 1):
     for i in range(self.cell_dia):
-      nx, ny = self._position_to_normalize(i, 0)
-      print(nx, ny)
       
-      #cell = self.cells[i][0]
-      cell = self.normalize_cell(nx,ny)
+      cell = self.cells[i][0]
+      #cell = self.normalize_cell(nx,ny)
       
       self.set_cell_color(cell, self.c0, self.g_stroke)
 
@@ -154,7 +152,7 @@ class View(ui.View):
 
 
 if __name__ == '__main__':
-  cell_radius: int = 8
+  cell_radius: int = 4
   view = View(cell_radius)
   view.present(style='fullscreen', orientations=['portrait'])
 
