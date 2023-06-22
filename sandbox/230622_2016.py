@@ -90,15 +90,23 @@ class View(ui.View):
     gpy = iy * self.cell_size + offset
     return [gpx, gpy]
 
+  def get_connect_positions(
+      self, s_cell: ui.Path,
+      e_cell: ui.Path) -> list[float, float, float, float]:
+    s_bix, s_biy = self.get_bounds_to_index(s_cell)
+    e_bix, e_biy = self.get_bounds_to_index(e_cell)
+    sx, sy = self.get_index_to_position(s_bix, s_biy)
+    ex, ey = self.get_index_to_position(e_bix, e_biy)
+    return [sx, sy, ex, ey]
+
   def create_line_cells_index(self,
                               s_cell: ui.Path,
                               e_cell: ui.Path,
                               stroke: str | float,
                               line_width: int = 1):
-    s_bix, s_biy = self.get_bounds_to_index(s_cell)
-    e_bix, e_biy = self.get_bounds_to_index(e_cell)
-    sx, sy = self.get_index_to_position(s_bix, s_biy)
-    ex, ey = self.get_index_to_position(e_bix, e_biy)
+    #s_bix, s_biy = self.get_bounds_to_index(s_cell)
+    #e_bix, e_biy = self.get_bounds_to_index(e_cell)
+    sx, sy, ex, ey = self.get_connect_positions(s_cell, e_cell)
 
     line = ui.Path()
     line.line_width = line_width
@@ -107,13 +115,15 @@ class View(ui.View):
     ui.set_color(stroke)
     line.stroke()
 
+  def get_oblique_length(self, axy: list[int, int], bxy: list[int, int]):
+    pass
+
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
     _, _, w, h = self.frame
     self.setup_grid_cells(w, h)
     self.init_grid_colors()
     self.setup_rect_edge_index()
-
     '''
     [
       self.set_cell_color(self.cell_cell(xy), c2, g_stroke)
@@ -122,24 +132,21 @@ class View(ui.View):
     '''
     c_cell = self.cell_cell([self.cell_rad, self.cell_rad])
     self.set_cell_color(c_cell, c3, g_stroke)
-    
+
     for n, adrs in enumerate(self.rect_edge_index):
       cell = self.cell_cell(adrs)
-      self.set_cell_color(cell, c0, g_stroke)
-      
-      
+      #self.set_cell_color(cell, c0, g_stroke)
+
       h = n / self.cell_dia
       hsv_color = colorsys.hsv_to_rgb(h, 1.0, 1.0)
       self.create_line_cells_index(c_cell, cell, hsv_color)
-      
-    
 
   def layout(self):
     pass
 
 
 if __name__ == '__main__':
-  cell_radius: int = 8
+  cell_radius: int = 3
   view = View(cell_radius)
   view.present(style='fullscreen', orientations=['portrait'])
 
