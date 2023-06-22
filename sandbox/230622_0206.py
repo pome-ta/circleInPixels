@@ -5,6 +5,15 @@ from decimal import Decimal, ROUND_HALF_UP, ROUND_HALF_EVEN
 
 import ui
 
+# --- color 定義
+g_stroke: str | float | int = 0.75
+g_fill: str | float | int = 0.25
+c0: str | float = 0.88
+c1: str | float = 'maroon'
+c2: str | float = 'blue'
+c3: str | float = 'green'
+c4: str | float = 'yellow'
+
 
 def round_halfup(f: float) -> int:
   return Decimal(str(f)).quantize(Decimal('0'), rounding=ROUND_HALF_UP)
@@ -18,17 +27,8 @@ class View(ui.View):
     self.cell_dia: int  # cell の全径
     self.cell_size: float
     self.grid_size: float
-    self.cells: list
-    self.indexs: list
-
-    # --- color 定義
-    self.g_stroke: str | float | int = 0.75
-    self.g_fill: str | float | int = 0.25
-    self.c0: str | float = 0.88
-    self.c1: str | float = 'maroon'
-    self.c2: str | float = 'blue'
-    self.c3: str | float = 'green'
-    self.c4: str | float = 'yellow'
+    self.cells: list[list[ui.Path]]
+    self.rect_edge_index: list[list[int]]
 
     # --- 変数反映
     self.bg_color = 1
@@ -49,8 +49,8 @@ class View(ui.View):
     _r = self.cell_rad
     is_center = lambda _x, _y: True if _x == _r or _y == _r else False
     [[
-      self.set_cell_color(cell, self.c1 if is_center(x, y) else self.g_fill,
-                          self.g_stroke) for y, cell in enumerate(rows)
+      self.set_cell_color(cell, c1 if is_center(x, y) else g_fill, g_stroke)
+      for y, cell in enumerate(rows)
     ] for x, rows in enumerate(self.cells)]
 
   def setup_grid_cells(self, width: float, height: float):
@@ -58,10 +58,9 @@ class View(ui.View):
     cd = int(self.cell_rad * 2) + 1
     cs = gs / cd
 
-    rd = range(cd)
     create_rect = lambda _x, _y: ui.Path.rect(cs * _x, cs * _y, cs, cs)
 
-    self.cells = [[create_rect(x, y) for y in rd] for x in rd]
+    self.cells = [[create_rect(x, y) for y in range(cd)] for x in range(cd)]
 
     self.grid_size = gs
     self.cell_dia = cd
