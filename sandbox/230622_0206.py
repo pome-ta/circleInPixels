@@ -61,24 +61,26 @@ class View(ui.View):
     create_rect = lambda _x, _y: ui.Path.rect(cs * _x, cs * _y, cs, cs)
 
     self.cells = [[create_rect(x, y) for y in range(cd)] for x in range(cd)]
-    self.setup_rect_edge_index(range(cd))
 
     self.grid_size = gs
     self.cell_dia = cd
     self.cell_size = cs
 
-  def setup_rect_edge_index(self, r:range):
-    for x in r:
-      for y in r:
-        if (x != 0 or x == len(r)) and (y != 0 or y == len(r)):
+  def setup_rect_edge_index(self):
+    for x in range(self.cell_dia):
+      for y in range(self.cell_dia):
+        if (0 < y < self.cell_dia - 1) and (0 < x < self.cell_dia - 1):
           continue
         self.rect_edge_index.append([x, y])
+        cell = self.cells[x][y]
+        self.set_cell_color(cell, c2, g_stroke)
 
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
     _, _, w, h = self.frame
     self.setup_grid_cells(w, h)
     self.init_grid_colors()
+    self.setup_rect_edge_index()
 
   def layout(self):
     pass
