@@ -28,7 +28,7 @@ class View(ui.View):
     self.cell_size: float
     self.grid_size: float
     self.cells: list[list[ui.Path]]
-    self.rect_edge_index: list[list[int]]
+    self.rect_edge_index: list[list[int]] = []
 
     # --- 変数反映
     self.bg_color = 1
@@ -61,10 +61,18 @@ class View(ui.View):
     create_rect = lambda _x, _y: ui.Path.rect(cs * _x, cs * _y, cs, cs)
 
     self.cells = [[create_rect(x, y) for y in range(cd)] for x in range(cd)]
+    self.setup_rect_edge_index(range(cd))
 
     self.grid_size = gs
     self.cell_dia = cd
     self.cell_size = cs
+
+  def setup_rect_edge_index(self, r:range):
+    for x in r:
+      for y in r:
+        if (x != 0 or x == len(r)) and (y != 0 or y == len(r)):
+          continue
+        self.rect_edge_index.append([x, y])
 
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
