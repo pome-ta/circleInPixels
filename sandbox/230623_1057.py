@@ -27,6 +27,7 @@ class View(ui.View):
     self.cell_dia: int  # cell の全径
     self.cell_size: float
     self.grid_size: float
+    self.radius_size: float  # 半径のサイズ
     self.cells: list[list[ui.Path]]
     self.rect_edge_index: list[list[int]] = []
 
@@ -114,13 +115,13 @@ class View(ui.View):
     line.stroke()
 
   def get_oblique_length(self, s_cell: ui.Path, e_cell: ui.Path):
-    sx, sy, ex, ey = self.get_cells_position_length(s_cell, e_cell)
-    print(sx, sy, ex, ey)
-    base_len = ex
-    height_len = sx
-    
-    #oblique_len = math.sqrt(pow())
-    
+    x1, y1, x2, y2 = self.get_cells_position_length(s_cell, e_cell)
+
+    oblique = math.sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2))
+    return oblique
+
+  def plot_radius_index(self, s_cell: ui.Path, e_cell: ui.Path):
+    pass
 
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
