@@ -90,7 +90,7 @@ class View(ui.View):
     gpy = iy * self.cell_size + offset
     return [gpx, gpy]
 
-  def get_connect_positions(
+  def get_cells_position_length(
       self, s_cell: ui.Path,
       e_cell: ui.Path) -> list[float, float, float, float]:
     s_bix, s_biy = self.get_bounds_to_index(s_cell)
@@ -106,7 +106,7 @@ class View(ui.View):
                               line_width: int = 1):
     #s_bix, s_biy = self.get_bounds_to_index(s_cell)
     #e_bix, e_biy = self.get_bounds_to_index(e_cell)
-    sx, sy, ex, ey = self.get_connect_positions(s_cell, e_cell)
+    sx, sy, ex, ey = self.get_cells_position_length(s_cell, e_cell)
 
     line = ui.Path()
     line.line_width = line_width
