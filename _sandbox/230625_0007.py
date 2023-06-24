@@ -101,7 +101,6 @@ class View(ui.View):
     return [int(ix), int(iy)]
 
   def get_index_to_position(self, ix: int, iy: int) -> list[float, float]:
-
     gpx = ix * self.cell_size + self.offset_length
     gpy = iy * self.cell_size + self.offset_length
     return [gpx, gpy]
@@ -139,34 +138,25 @@ class View(ui.View):
     ax, ay, bx, by = self.get_cells_position(s_cell, e_cell)
     base_length = ax - bx
     height_length = ay - by
-    #print('/ ---')
-    #print(f'a: {ax}, {ay}')
-    #print(f'b: {bx}, {by}')
 
     oblique = self.get_oblique_length(base_length, height_length)
 
-    #print(f'r: {oblique}')
-    #print(f's: {self.radius_length}')
-    #print('--- /')
-    '''
-    cx = ax + (oblique / self.radius_length) * (bx - ax)
-    cy = ay + (oblique / self.radius_length) * (by - ay)
-    '''
     cx = ax + (self.radius_length / oblique) * (bx - ax)
     cy = ay + (self.radius_length / oblique) * (by - ay)
+    
+    
     line = ui.Path()
     line.line_width = 1
     line.move_to(ax, ay)
     line.line_to(cx, cy)
     ui.set_color('cyan')
     line.stroke()
+    
 
     px = cx - self.offset_length
     py = cy - self.offset_length
 
     ix, iy = self.get_position_to_index(px, py)
-    #print(indexs)
-
     return [ix, iy]
 
   def test_line(self, s, e):
@@ -186,10 +176,18 @@ class View(ui.View):
     for n, adrs in enumerate(self.rect_edge_index):
       h = n / self.cell_dia
       hsv_color = colorsys.hsv_to_rgb(h, 1.0, 1.0)
-      e_cell = self.set_cell(adrs, hsv_color, g_stroke)
+      #e_cell = self.set_cell(adrs, hsv_color, g_stroke)
+      #self.test_line(s_cell, e_cell)
+      e_cell = self.cell_cell(adrs)
+      
+      o_cell_index = self.plot_radius_index(s_cell, e_cell)
+      o_cell = self.set_cell(o_cell_index, c0, g_stroke)
       self.test_line(s_cell, e_cell)
+      
+      
+      
 
-    o_cell_index = self.plot_radius_index(s_cell, e_cell)
+    #o_cell_index = self.plot_radius_index(s_cell, e_cell)
     #o_cell = self.set_cell(o_cell_index, c0, g_stroke)
     #self.create_line_cells_index(s_cell, o_cell, c4)
 
@@ -198,7 +196,7 @@ class View(ui.View):
 
 
 if __name__ == '__main__':
-  cell_radius: int = 9
+  cell_radius: int = 32
   view = View(cell_radius)
   #view.present(style='fullscreen', orientations=['portrait'])
   view.present(style='panel', orientations=['portrait'])
