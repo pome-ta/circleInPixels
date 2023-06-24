@@ -156,10 +156,8 @@ class View(ui.View):
     line.line_width = 1
     line.move_to(ax, ay)
     line.line_to(cx, cy)
-    ui.set_color('magenta')
+    ui.set_color('cyan')
     line.stroke()
-
-    
 
     indexs = self.get_position_to_index(cx, cy)
     #print(indexs)
@@ -167,7 +165,8 @@ class View(ui.View):
     return indexs
 
   def test_line(self, s, e):
-    self.create_line_cells_index(s, e, g_stroke)
+    #self.create_line_cells_index(s, e, g_stroke)
+    self.create_line_cells_index(s, e, 'magenta')
     self.plot_radius_index(s, e)
 
   def draw(self):
@@ -179,9 +178,11 @@ class View(ui.View):
 
     s_cell = self.set_cell([self.cell_rad, self.cell_rad], c3, g_stroke)
 
-    e_cell = self.set_cell([self.cell_rad + 2, 0], c2, g_stroke)
-
-    self.test_line(s_cell, e_cell)
+    for n, adrs in enumerate(self.rect_edge_index):
+      h = n / self.cell_dia
+      hsv_color = colorsys.hsv_to_rgb(h, 1.0, 1.0)
+      e_cell = self.set_cell(adrs, hsv_color, g_stroke)
+      self.test_line(s_cell, e_cell)
 
     o_cell_index = self.plot_radius_index(s_cell, e_cell)
     #o_cell = self.set_cell(o_cell_index, c0, g_stroke)
