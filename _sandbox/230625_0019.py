@@ -98,6 +98,10 @@ class View(ui.View):
   def get_position_to_index(self, px: float, py: float) -> list[int, int]:
     ix = round_halfup(px / self.cell_size)
     iy = round_halfup(py / self.cell_size)
+    '''
+    ix = int(px / self.cell_size)
+    iy = int(py / self.cell_size)
+    '''
     return [int(ix), int(iy)]
 
   def get_index_to_position(self, ix: int, iy: int) -> list[float, float]:
@@ -144,12 +148,14 @@ class View(ui.View):
     cx = ax + (self.radius_length / oblique) * (bx - ax)
     cy = ay + (self.radius_length / oblique) * (by - ay)
 
+    '''
     line = ui.Path()
     line.line_width = 1
     line.move_to(ax, ay)
     line.line_to(cx, cy)
     ui.set_color('cyan')
     line.stroke()
+    '''
 
     px = cx - self.offset_length
     py = cy - self.offset_length
@@ -181,11 +187,11 @@ class View(ui.View):
 
       o_cell_index = self.plot_radius_index(s_cell, e_cell)
       if o_cell_index in cache:
-        print(o_cell_index)
+        #print(o_cell_index)
         continue
       cache.append(o_cell_index)
       o_cell = self.set_cell(o_cell_index, c0, g_stroke)
-      self.test_line(s_cell, e_cell)
+      #self.test_line(s_cell, e_cell)
 
   def layout(self):
     pass
