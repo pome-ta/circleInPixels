@@ -2,7 +2,6 @@
 import math
 from decimal import Decimal, ROUND_HALF_UP, ROUND_HALF_EVEN
 
-
 import ui
 
 # --- color 定義
@@ -13,6 +12,7 @@ c1: str | float = 'maroon'
 c2: str | float = 'blue'
 c3: str | float = 'green'
 c4: str | float = 'yellow'
+
 
 def round_halfup(f: float) -> int:
   return Decimal(str(f)).quantize(Decimal('0'), rounding=ROUND_HALF_UP)
@@ -97,7 +97,7 @@ class View(ui.View):
   def get_position_to_index(self, px: float, py: float) -> list[int, int]:
     ix = round_halfup(px / self.cell_size)
     iy = round_halfup(py / self.cell_size)
-    
+
     return [int(ix), int(iy)]
 
   def get_index_to_position(self, ix: int, iy: int) -> list[float, float]:
@@ -134,7 +134,13 @@ class View(ui.View):
 
     return oblique
 
-  
+  def set_guide_oval(self, dot_size: float = 2.0, interval: int = 5):
+    pos_x = self.radius_length - (dot_size / 2)
+    pos_y = self.radius_length - (dot_size / 2)
+
+    for i in range(0, 360, interval):
+      pass
+
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
     _, _, w, h = self.frame
