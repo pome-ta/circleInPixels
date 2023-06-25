@@ -148,14 +148,12 @@ class View(ui.View):
     cx = ax + (self.radius_length / oblique) * (bx - ax)
     cy = ay + (self.radius_length / oblique) * (by - ay)
 
-    '''
     line = ui.Path()
     line.line_width = 1
     line.move_to(ax, ay)
     line.line_to(cx, cy)
     ui.set_color('cyan')
     line.stroke()
-    '''
 
     px = cx - self.offset_length
     py = cy - self.offset_length
@@ -184,21 +182,24 @@ class View(ui.View):
       #e_cell = self.set_cell(adrs, hsv_color, g_stroke)
       #self.test_line(s_cell, e_cell)
       e_cell = self.cell_cell(adrs)
-
+      
       o_cell_index = self.plot_radius_index(s_cell, e_cell)
+      '''
       if o_cell_index in cache:
         #print(o_cell_index)
         continue
       cache.append(o_cell_index)
-      o_cell = self.set_cell(o_cell_index, c0, g_stroke)
-      #self.test_line(s_cell, e_cell)
-
+      '''
+      
+      o_cell = self.set_cell(o_cell_index, c1, g_stroke)
+      self.test_line(s_cell, e_cell)
+      
   def layout(self):
     pass
 
 
 if __name__ == '__main__':
-  cell_radius: int = 9
+  cell_radius: int = 3
   view = View(cell_radius)
   #view.present(style='fullscreen', orientations=['portrait'])
   view.present(style='panel', orientations=['portrait'])

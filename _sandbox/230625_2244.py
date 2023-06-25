@@ -1,6 +1,7 @@
 # 円座標上の点から、取得点の数でプロット
 import math
 from decimal import Decimal, ROUND_HALF_UP, ROUND_HALF_EVEN
+import collections
 
 import ui
 
@@ -31,13 +32,15 @@ class View(ui.View):
     self.cells: list[list[ui.Path]]
     self.rect_edge_index: list[list[int]] = []
 
+
+
     # --- 変数反映
     self.bg_color = 1
     self.cell_rad = r
 
   def cell_cell(self, _xy: list[int, int]) -> ui.Path:
-    x, y = _xy
-    return self.cells[x][y]
+    _x, _y = _xy
+    return self.cells[_x][_y]
 
   def set_cell_color(self,
                      cell: ui.Path,
@@ -59,8 +62,7 @@ class View(ui.View):
 
   def init_grid_colors(self):
     # --- 中心線塗り
-    _r = self.cell_rad
-    is_center = lambda _x, _y: True if _x == _r or _y == _r else False
+    is_center = lambda _x, _y: True if _x == self.cell_rad or _y == self.cell_rad else False
     [[
       self.set_cell_color(cell, c1 if is_center(x, y) else g_fill, g_stroke)
       for y, cell in enumerate(rows)
@@ -81,13 +83,16 @@ class View(ui.View):
     self.radius_length = (gs / 2.0) - (cs / 2.0)
     self.offset_length = cs / 2.0
 
-  def setup_rect_edge_index(self):
-    # xxx: `filter` やら、あとでやる
-    for x in range(self.cell_dia):
-      for y in range(self.cell_dia):
-        if (0 < y < self.cell_dia - 1) and (0 < x < self.cell_dia - 1):
-          continue
-        self.rect_edge_index.append([x, y])
+  def set_guide_oval(self, dot_size: float = 2.0, interval: int = 1):
+    pos_offset = self.radius_length - (dot_size / 2) + self.offset_length
+
+    for i in range(0, 360, interval):
+      r = math.radians(i)
+      x = pos_offset + (self.radius_length * math.cos(r))
+      y = pos_offset + (self.radius_length * math.sin(r))
+      ui.set_color('cyan')
+      dot = ui.Path.oval(x, y, dot_size, dot_size)
+      dot.fill()
 
   def get_bounds_to_index(self, cell: ui.Path) -> list[int, int]:
     cx, cy, _, _ = cell.bounds
@@ -97,7 +102,6 @@ class View(ui.View):
   def get_position_to_index(self, px: float, py: float) -> list[int, int]:
     ix = round_halfup(px / self.cell_size)
     iy = round_halfup(py / self.cell_size)
-
     return [int(ix), int(iy)]
 
   def get_index_to_position(self, ix: int, iy: int) -> list[float, float]:
@@ -113,53 +117,31 @@ class View(ui.View):
     ex, ey = self.get_index_to_position(e_bix, e_biy)
     return [sx, sy, ex, ey]
 
-  def create_line_cells_index(self,
-                              s_cell: ui.Path,
-                              e_cell: ui.Path,
-                              stroke: str | float,
-                              line_width: int = 1):
-    sx, sy, ex, ey = self.get_cells_position(s_cell, e_cell)
-
-    line = ui.Path()
-    line.line_width = line_width
-    line.move_to(sx, sy)
-    line.line_to(ex, ey)
-    ui.set_color(stroke)
-    line.stroke()
-
-  def get_oblique_length(self, base_length: float,
-                         height_length: float) -> float:
-
-    oblique = math.sqrt(pow((base_length), 2) + pow((height_length), 2))
-
-    return oblique
-
-  def set_guide_oval(self, dot_size: float = 2.0, interval: int = 5):
-    pos_x = self.radius_length - (dot_size / 2)
-    pos_y = self.radius_length - (dot_size / 2)
-
-    for i in range(0, 360, interval):
+  def get_oval_guide(self):
+    pos_offset = self.radius_length + self.offset_length
+    
+    indexs = []
+    for i in range(360):
       r = math.radians(i)
-      x = pos_x + (self.radius_length * math.cos(r))
-      y = pos_y + (self.radius_length * math.sin(r))
-      ui.set_color('cyan')
-      dot = ui.Path.oval(x + self.offset_length, y + self.offset_length,
-                         dot_size, dot_size)
-      dot.fill()
-
+      x = pos_offset + (self.radius_length * math.cos(r))
+      y = pos_offset + (self.radius_length * math.sin(r))
+      
+  
+  
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
     _, _, w, h = self.frame
     self.init_grid_cells(w, h)
     self.init_grid_colors()
-    self.set_guide_oval()
+    #self.set_guide_oval(1, 1)
+    self.get_oval_guide()
 
   def layout(self):
     pass
 
 
 if __name__ == '__main__':
-  cell_radius: int = 9
+  cell_radius: int = 4
   view = View(cell_radius)
   #view.present(style='fullscreen', orientations=['portrait'])
   view.present(style='panel', orientations=['portrait'])
