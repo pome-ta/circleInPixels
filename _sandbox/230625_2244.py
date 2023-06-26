@@ -32,8 +32,6 @@ class View(ui.View):
     self.cells: list[list[ui.Path]]
     self.rect_edge_index: list[list[int]] = []
 
-
-
     # --- 変数反映
     self.bg_color = 1
     self.cell_rad = r
@@ -119,22 +117,24 @@ class View(ui.View):
 
   def get_oval_guide(self):
     pos_offset = self.radius_length + self.offset_length
-    
+
     indexs = []
     for i in range(360):
       r = math.radians(i)
       x = pos_offset + (self.radius_length * math.cos(r))
       y = pos_offset + (self.radius_length * math.sin(r))
-      
-  
-  
+      indexs.append(self.get_position_to_index(x, y))
+    return indexs
+
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
     _, _, w, h = self.frame
     self.init_grid_cells(w, h)
     self.init_grid_colors()
     #self.set_guide_oval(1, 1)
-    self.get_oval_guide()
+    self.indexs = self.get_oval_guide()
+    for ad in self.indexs:
+      self.set_cell(ad, c3)
 
   def layout(self):
     pass
