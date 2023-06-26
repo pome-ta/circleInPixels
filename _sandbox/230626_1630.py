@@ -106,10 +106,10 @@ class View(ui.View):
       dot = ui.Path.oval(x, y, dot_size, dot_size)
       dot.fill()
     self.set_index = list(map(list, set(map(tuple, self.guide_oval_indexs))))
-    
+
     self.index_counter_dics = []
     for xy in self.set_index:
-      index_count = {'index':xy, 'count':self.guide_oval_indexs.count(xy)}
+      index_count = {'index': xy, 'count': self.guide_oval_indexs.count(xy)}
       self.index_counter_dics.append(index_count)
 
   def draw(self):
@@ -124,7 +124,7 @@ class View(ui.View):
 
 
 if __name__ == '__main__':
-  cell_radius: int = 4
+  cell_radius: int = 128
   view = View(cell_radius)
   #view.present(style='fullscreen', orientations=['portrait'])
   view.present(style='panel', orientations=['portrait'])
