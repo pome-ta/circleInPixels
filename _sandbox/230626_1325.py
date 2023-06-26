@@ -86,8 +86,9 @@ class View(ui.View):
 
     for i in range(0, 360, interval):
       r = math.radians(i)
-      x = pos_offset + (self.radius_length * math.cos(r))
-      y = pos_offset + (self.radius_length * math.sin(r))
+      x = pos_offset + (self.radius_length * math.sin(r))
+      y = pos_offset + (self.radius_length * math.cos(r))
+      print(x,y)
       ui.set_color('cyan')
       dot = ui.Path.oval(x, y, dot_size, dot_size)
       dot.fill()
