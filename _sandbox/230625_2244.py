@@ -121,8 +121,8 @@ class View(ui.View):
     indexs = []
     for i in range(360):
       r = math.radians(i)
-      x = pos_offset + (self.radius_length * math.cos(r))
-      y = pos_offset + (self.radius_length * math.sin(r))
+      x = (self.radius_length * math.cos(r))
+      y = (self.radius_length * math.sin(r))
       indexs.append(self.get_position_to_index(x, y))
     return indexs
 
