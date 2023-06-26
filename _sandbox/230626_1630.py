@@ -1,6 +1,5 @@
 # 円座標上の点から、取得点の数でプロット
 import math
-from decimal import Decimal, ROUND_HALF_UP, ROUND_HALF_EVEN
 import collections
 
 import ui
@@ -13,10 +12,6 @@ c1: str | float = 'maroon'
 c2: str | float = 'blue'
 c3: str | float = 'green'
 c4: str | float = 'yellow'
-
-
-def round_halfup(f: float) -> int:
-  return Decimal(str(f)).quantize(Decimal('0'), rounding=ROUND_HALF_UP)
 
 
 class View(ui.View):
@@ -97,7 +92,7 @@ class View(ui.View):
 
     self.guide_oval_indexs = []
     for i in range(0, 360, interval):
-      if i > 361:
+      if i > 361:  # xxx: テスト確認用
         break
       r = math.radians(i)
       x = pos_offset + (self.radius_length * math.cos(r))
@@ -110,7 +105,12 @@ class View(ui.View):
       ui.set_color('magenta')
       dot = ui.Path.oval(x, y, dot_size, dot_size)
       dot.fill()
+    self.set_index = list(map(list, set(map(tuple, self.guide_oval_indexs))))
     
+    self.index_counter_dics = []
+    for xy in self.set_index:
+      index_count = {'index':xy, 'count':self.guide_oval_indexs.count(xy)}
+      self.index_counter_dics.append(index_count)
 
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
