@@ -1,5 +1,6 @@
 # 円座標上の点から、取得点の数でプロット
 import math
+import statistics
 import collections
 
 import ui
@@ -108,9 +109,24 @@ class View(ui.View):
     self.set_index = list(map(list, set(map(tuple, self.guide_oval_indexs))))
 
     self.index_counter_dics = []
+    self.index_total_count = []
     for xy in self.set_index:
-      index_count = {'index': xy, 'count': self.guide_oval_indexs.count(xy)}
+      count = self.guide_oval_indexs.count(xy)
+      index_count = {'index': xy, 'count': count}
       self.index_counter_dics.append(index_count)
+      self.index_total_count.append(count)
+
+    set_all = list(set(self.index_total_count))
+    mean_all = statistics.mean(self.index_total_count)
+    mean_set = statistics.mean(set_all)
+    print(f'mean_all:{mean_all}')
+    print(f'mean_set: {mean_set}')
+    stdev_all = statistics.stdev(self.index_total_count)
+    stdev_set = statistics.stdev(set_all)
+    print(f'stdev_all: {stdev_all}')
+    print(f'stdev_set: {stdev_set}')
+    variance_all = statistics.variance(self.index_total_count)
+    print(f'{variance_all=}')
 
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
@@ -124,7 +140,7 @@ class View(ui.View):
 
 
 if __name__ == '__main__':
-  cell_radius: int = 128
+  cell_radius: int = 9
   view = View(cell_radius)
   #view.present(style='fullscreen', orientations=['portrait'])
   view.present(style='panel', orientations=['portrait'])
