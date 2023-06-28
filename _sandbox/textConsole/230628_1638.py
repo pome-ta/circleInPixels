@@ -6,3 +6,15 @@ indexs = [[[x, y] for y in range(radius_length)] for x in range(radius_length)]
 
 cells = [[0 for column in rows] for rows in indexs]
 
+
+def output_console(f):
+
+  def _wrapper(*args, **keywords):
+    pass
+
+  return _wrapper
+
+
+def main():
+  pass
+
