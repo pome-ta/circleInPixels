@@ -125,7 +125,7 @@ class View(ui.View):
 
 
 if __name__ == '__main__':
-  cell_radius: int = 9
+  cell_radius: int = 3
   view = View(cell_radius)
   #view.present(style='fullscreen', orientations=['portrait'])
   view.present(style='panel', orientations=['portrait'])
