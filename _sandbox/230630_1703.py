@@ -1,5 +1,5 @@
 # 円のアルゴリズム [計算機科学の分野で、直感に反する法則などはありますか? - Quora](https://jp.quora.com/%E8%A8%88%E7%AE%97%E6%A9%9F%E7%A7%91%E5%AD%A6%E3%81%AE%E5%88%86%E9%87%8E%E3%81%A7-%E7%9B%B4%E6%84%9F%E3%81%AB%E5%8F%8D%E3%81%99%E3%82%8B%E6%B3%95%E5%89%87%E3%81%AA%E3%81%A9%E3%81%AF%E3%81%82%E3%82%8A%E3%81%BE)
-import math
+
 import functools
 
 import ui
@@ -47,11 +47,6 @@ class View(ui.View):
   def __init__(self, r: int = 2):
     # --- 初期定義
     self.cell_rad: int  # cell の半径
-    self.cell_dia: int  # cell の全径
-    self.cell_size: float
-    self.grid_size: float
-    self.radius_length: float  # 半径のサイズ
-    self.offset_length: float  # cell 中心調整
     self.cells: list[list[ui.Path]]
     self.oval_indexs: list
 
@@ -98,12 +93,6 @@ class View(ui.View):
 
     self.cells = [[create_rect(x, y) for y in range(cd)] for x in range(cd)]
 
-    self.cell_dia = cd
-    self.cell_size = cs
-    self.grid_size = gs
-    self.radius_length = (gs / 2.0) - (cs / 2.0)
-    self.offset_length = cs / 2.0
-
   def draw(self):
     # todo: view 確定後に、画面位置サイズ情報を取得
     _, _, w, h = self.frame
@@ -127,6 +116,6 @@ if __name__ == '__main__':
   cell_radius: int = 8
 
   view = View(cell_radius)
-  #view.present(style='fullscreen', orientations=['portrait'])
-  view.present(style='panel', orientations=['portrait'])
+  view.present(style='fullscreen', orientations=['portrait'])
+  #view.present(style='panel', orientations=['portrait'])
 
