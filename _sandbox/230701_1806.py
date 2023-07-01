@@ -126,16 +126,13 @@ class ControlView(ui.View):
   def setup_buttons(self):
     self.down_button = self.create_button_item('iob:arrow_down_b_32', -1)
     self.up_button = self.create_button_item('iob:arrow_up_b_32', 1)
-    
+
     # xxx: いい感じに調整
-    
-    
+
     self.wrap_view.add_subview(self.down_button)
     self.wrap_view.add_subview(self.up_button)
-    
-    
 
-  def create_button_item(self, img_path:str, rate:int):
+  def create_button_item(self, img_path: str, rate: int):
     img = ui.Image.named(img_path)
     btn = ui.Button(image=img)
     btn.rate = rate
@@ -160,8 +157,8 @@ class ControlView(ui.View):
 
     self.wrap_view.x = position_x
     self.wrap_view.y = position_y
-    
-    for btn in self.
+
+    #for btn in self.
 
 
 class View(ui.View):
