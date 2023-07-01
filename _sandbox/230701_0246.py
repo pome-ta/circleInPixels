@@ -152,6 +152,7 @@ class View(ui.View):
 
     self.add_subview(self.btn)
     self.control_view = ControlView()
+    
     self.add_subview(self.control_view)
 
   def layout(self):
@@ -163,6 +164,8 @@ class View(ui.View):
 
     canvas_x = (w / 2) - (canvas_size / 2)
     self.canvas.x = canvas_x
+    
+    self.control_view.width = canvas_size
 
 
 if __name__ == '__main__':
