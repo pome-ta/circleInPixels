@@ -108,9 +108,35 @@ class DrawCanvas(ui.View):
     for xy_index in self.oval_indexs:
       self.set_cell(xy_index, c3, g_stroke)
 
-  
   def layout(self):
     pass
+
+
+class ControlView(ui.View):
+
+  def __init__(self, *args, **kwargs):
+    self.bg_color = 'red'
+
+    self.wrap_view = ui.View()
+    self.wrap_view.bg_color = 'blue'
+    #self.wrap_view.flex = 'WH'
+
+    self.add_subview(self.wrap_view)
+
+  def create_button_item(self, img_path):
+    img = ui.Image.named(img_path)
+    btn = ui.Button(image=img)
+    wrap = ui.View()
+    wrap.bg_color = 'green'
+    wrap.add_subview(btn)
+    return wrap
+
+  def layout(self):
+    _, _, w, h = self.frame
+    width_size = h * 0.8
+    position_x = (w / 2) - (width_size / 2)
+    self.wrap_view.width = width_size
+    self.wrap_view.x = position_x
 
 
 class View(ui.View):
@@ -121,12 +147,21 @@ class View(ui.View):
     self.canvas = DrawCanvas(r)
     self.add_subview(self.canvas)
 
+    self.img = ui.Image.named('iob:arrow_down_b_32')
+    self.btn = ui.Button(image=self.img)
+
+    self.add_subview(self.btn)
+    self.control_view = ControlView()
+    self.add_subview(self.control_view)
+
   def layout(self):
     _, _, w, h = self.frame
+
     canvas_size = min(w, h)
-    canvas_x = (w / 2) - (canvas_size / 2)
     self.canvas.width = canvas_size
     self.canvas.height = canvas_size
+
+    canvas_x = (w / 2) - (canvas_size / 2)
     self.canvas.x = canvas_x
 
 
@@ -136,7 +171,7 @@ if __name__ == '__main__':
   view = View(cell_radius)
 
   view.present(style='fullscreen')
-  
+
   #view.present(style='fullscreen', orientations=['portrait'])
 
   #view.present(style='panel', orientations=['portrait'])
