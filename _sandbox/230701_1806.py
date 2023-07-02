@@ -120,6 +120,17 @@ class ControlView(ui.View):
     self.wrap_view = ui.View()
     self.wrap_view.bg_color = 'blue'
 
+    self.button_primitive = [
+      {
+        'image': 'iob:arrow_down_b_32',
+        'rate': -1,
+      },
+      {
+        'image': 'iob:arrow_down_b_32',
+        'rate': 1
+      },
+    ]
+
     self.add_subview(self.wrap_view)
     self.setup_buttons()
 
@@ -128,6 +139,7 @@ class ControlView(ui.View):
     self.up_button = self.create_button_item('iob:arrow_up_b_32', 1)
 
     # xxx: いい感じに調整
+    self.buttons = [self.down_button, self.up_button]
 
     self.wrap_view.add_subview(self.down_button)
     self.wrap_view.add_subview(self.up_button)
@@ -157,8 +169,6 @@ class ControlView(ui.View):
 
     self.wrap_view.x = position_x
     self.wrap_view.y = position_y
-
-    #for btn in self.
 
 
 class View(ui.View):
