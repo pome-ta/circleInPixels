@@ -148,12 +148,19 @@ class ControlView(ui.View):
     img = ui.Image.named(img_path)
     btn = ui.Button(image=img)
     btn.name = item_name + '_btn'
+    btn.bg_color = 'yellow'
+    #btn.flex = 'TBLR'
+    #btn.size_to_fit()
     btn.rate = rate
     wrap = ui.View()
+    #wrap.flex = 'TBLR'
+
     wrap.name = item_name + '_view'
     wrap.bg_color = 'green'
     wrap.add_subview(btn)
-    return wrap
+    #wrap.size_to_fit()
+    #return wrap
+    return btn
 
   def layout(self):
     _, _, w, h = self.frame
@@ -172,34 +179,39 @@ class ControlView(ui.View):
     self.wrap_view.x = position_x
     self.wrap_view.y = position_y
 
+    for btn in self.button_items:
+      pass
+
 
 class View(ui.View):
 
   def __init__(self, r: int = 2, *args, **kwargs):
     # --- 変数反映
     self.bg_color = 1
+    
     self.canvas = DrawCanvas(r)
-    self.add_subview(self.canvas)
-
-    self.img = ui.Image.named('iob:arrow_down_b_32')
-    self.btn = ui.Button(image=self.img)
-
-    self.add_subview(self.btn)
     self.control_view = ControlView()
-
+    
+    self.add_subview(self.canvas)
     self.add_subview(self.control_view)
 
   def layout(self):
     _, _, w, h = self.frame
 
     min_size = min(w, h)
+
+    # todo: canvas
     self.canvas.width = min_size
     self.canvas.height = min_size
 
     canvas_x = (w / 2) - (min_size / 2)
     self.canvas.x = canvas_x
 
+    # todo: control
+    control_height = (h - min_size) * 0.25
+
     self.control_view.width = min_size
+    self.control_view.height = control_height
     self.control_view.y = min_size
 
 
