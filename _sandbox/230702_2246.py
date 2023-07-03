@@ -179,8 +179,14 @@ class ControlView(ui.View):
     self.wrap_view.x = position_x
     self.wrap_view.y = position_y
 
+    btn_size = height_size
     for btn in self.button_items:
-      pass
+      btn.width = height_size
+      btn.height = height_size
+
+      position = [0, 0
+                  ] if btn.name == 'down_btn' else [width_size - btn_size, 0]
+      btn.x, btn.y = position
 
 
 class View(ui.View):
@@ -188,10 +194,10 @@ class View(ui.View):
   def __init__(self, r: int = 2, *args, **kwargs):
     # --- 変数反映
     self.bg_color = 1
-    
+
     self.canvas = DrawCanvas(r)
     self.control_view = ControlView()
-    
+
     self.add_subview(self.canvas)
     self.add_subview(self.control_view)
 
