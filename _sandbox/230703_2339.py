@@ -266,7 +266,7 @@ class View(ui.View):
 
 
 if __name__ == '__main__':
-  cell_radius: int = 8
+  cell_radius: int = 2
 
   view = View(cell_radius)
 
