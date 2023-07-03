@@ -52,7 +52,15 @@ class DrawCanvas(ui.View):
 
     # --- 変数反映
     self.bg_color = 0
-    self.cell_rad = r
+    self.__cell_rad = r
+
+  @property
+  def cell_rad(self) -> int:
+    return self.__cell_rad
+
+  @cell_rad.setter
+  def cell_rad(self, rad: int):
+    self.__cell_rad = rad
 
   def cell_cell(self, _xy: list[int, int]) -> ui.Path:
     _x, _y = _xy
@@ -133,8 +141,12 @@ class ControlView(ui.View):
         'rate': 1
       },
     ]
-
     self.setup_buttons()
+
+    self.score_text = ui.TextView()
+    self.score_text.bg_color = 'green'
+
+    self.wrap_view.add_subview(self.score_text)
 
   def setup_buttons(self):
     self.button_items = [
@@ -188,14 +200,30 @@ class ControlView(ui.View):
       position = [0, 0] if btn.name == 'down_btn' else [r, 0]
       btn.x, btn.y = position
 
+    self.score_text.width = r - btn_size
+    self.score_text.height = height_size
+    self.score_text.x = btn_size
+
 
 class MyButtonHandler(object):
 
-  def __init__(self, main_view, canvas_view):
-    pass
+  def __init__(self, r: int, canvas_view: ui.View, control_view: ui.View):
+    self.r = r
+    self.canvas_view = canvas_view
+    self.score_view = control_view.score_text
+    self.update_value(self.r)
+
+  def update_value(self, value):
+    self.canvas_view.cell_rad = int(value)
+    self.score_view.text = str(value)
 
   def button_tapped(self, sender):
-    print('button tapped')
+    # xxx: セイウチ
+    _value = self.r + sender.rate
+    value = _value if _value >= 2 else 2
+    self.update_value(value)
+    self.canvas_view.draw()
+    self.r = value
 
 
 class View(ui.View):
@@ -206,12 +234,13 @@ class View(ui.View):
 
     self.canvas = DrawCanvas(r)
     self.control_view = ControlView()
+    handler = MyButtonHandler(r, self.canvas, self.control_view)
+
+    for btn in self.control_view.button_items:
+      btn.action = handler.button_tapped
 
     self.add_subview(self.canvas)
     self.add_subview(self.control_view)
-
-  def draw(self):
-    print('main draw')
 
   def layout(self):
     _, _, w, h = self.frame
