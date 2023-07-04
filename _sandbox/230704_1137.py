@@ -28,7 +28,7 @@ def get_normalize_oval_indexs(radius_length: int) -> list:
     [oval_list.append(items) for items in set_index(x, y)]
     a = a - (x * 2) - 1
     x += 1
-    if a < 0:
+    if a <= 0:
       a = a + (y * 2) - 1
       y -= 1
 
