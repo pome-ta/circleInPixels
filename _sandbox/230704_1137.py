@@ -21,17 +21,19 @@ def get_normalize_oval_indexs(radius_length: int) -> list:
   a = radius_length
   oval_list = []
 
-  set_index = lambda _x, _y: [[_x, _y], [-_x, _y], [-_x, -_y], [_x, -_y], [_y, _x], [-_y, _x], [-_y, -_x], [_y, -_x]]
+  set_index = lambda _x, _y: [[_x, _y], [-_x, _y], [-_x, -_y], [_x, -_y],
+                              [_y, _x], [-_y, _x], [-_y, -_x], [_y, -_x]]
 
   while x < y:
     #print(release_normalize([x,y],radius_length))
     [oval_list.append(items) for items in set_index(x, y)]
+    #x += 1
     a = a - (x * 2) - 1
     x += 1
     if a < 0:
+      #y -= 1
       a = a + (y * 2) - 1
       y -= 1
-
   return oval_list
 
 
@@ -109,7 +111,6 @@ class DrawCanvas(ui.View):
     self.init_grid_cells(w, h)
     self.init_grid_colors()
 
-    
     # todo: 円のアルゴリズム結果を取得
     normalize_oval_indexs: list = get_normalize_oval_indexs(self.cell_rad)
 
