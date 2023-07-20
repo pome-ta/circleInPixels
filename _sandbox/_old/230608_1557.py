@@ -25,9 +25,9 @@ class View(ui.View):
       ui.Path.rect(cell_size * x, cell_size * y, cell_size, cell_size)
       for x in range(n)
     ] for y in range(n)]
-    
+
     [[setup_cells(r, x, y, cells[x][y]) for y in range(n)] for x in range(n)]
-    
+
     return cells
 
   def draw(self):
